@@ -1,0 +1,79 @@
+import React from "react";
+import logo from "../../images/Griffin Black.png";
+import sectionimage from "../../images/79205c0e916b529d8d136ce69e32e592.png";
+import TextField from "@mui/material/TextField";
+import logo1 from "../../images/Logo (1).png";
+import whitelogo from "../../images/T&R White.png"
+import sectionimg2 from "../../images/Tap & Run_MainImage 1.png";
+import "./TopModify.css";
+import { Link } from "react-router-dom";
+export default function Modify() {
+  return (
+    <div className="BookedMain" id="choose">
+      <div className="DetailsimgMain">
+        <img src={whitelogo} alt="logo" className="logodatta" />
+        <img src={sectionimg2} alt="section_image" className="Data_imag" />
+        <div className="changeMain">
+          <div className="Changeta fixedit"></div>
+          <div className="Changeta"></div>
+          <div className="Changeta"></div>
+          <div className="Changeta "></div>
+          <div className="Changeta"></div>
+        </div>
+        <Link to="/Select" className="anotherpub">
+          CHOOSE ANOTHER PUB
+        </Link>
+      </div>
+      <div className="Modify-main">
+        <div className="Data_type imgdata">
+          <img src={logo} alt="logo" />
+        </div>
+        <div className="Data_type">
+          <h1 className="logo-large datetilte">Modify A Booking </h1>
+        </div>
+        <div className="Data_type" id="Data_type1">
+          <h4>
+            Please Enter Your Booking Number, As Provided In Your Confirmation
+            Email.
+          </h4>
+        </div>
+        <div className="textfieldMain">
+          <TextField
+            required
+            id="outlined-required"
+            label="Booking Number"
+            defaultValue="Enter your mobile number"
+            className="inputfeild feildproblem"
+          />
+          <p className="eg">E.G. XXXX-XXXX-XXXX</p>
+        </div>
+        <div className="Data_type ModifybtonMain">
+          <Link to="/TopEdit" className="modifybtn btn3">
+            Edit A Booking
+          </Link>
+          <Link to="" className="modifybtn btn2">
+            resend the confirmation email
+          </Link>
+        </div>
+        <div className="Data_type" id="Data_type1">
+          <h5>
+            Lost Your Booking Details? Press The Button To Resend The
+            Confirmation Email.
+          </h5>
+        </div>
+        <div className="ModifyMainmob">
+          <div className="Modifytab fixedit"></div>
+          <div className="Modifytab "></div>
+          <div className="Modifytab"></div>
+          <div className="Modifytab "></div>
+          <div className="Modifytab "></div>
+        </div>
+        <div className="Data_type ">
+          <Link to="/" className="Existlink">
+            Exit And Cancel Booking
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
