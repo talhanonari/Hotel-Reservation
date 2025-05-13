@@ -1,6 +1,4 @@
 import React from "react";
-import logo from "../../images/Griffin Black.png";
-import sectionimage from "../../images/79205c0e916b529d8d136ce69e32e592.png";
 import logo1 from "../../images/Logo (1).png";
 import sectionimg2 from "../../images/Tap & Run_MainImage 1.png";
 import whitelogo from "../../images/T&R White.png"
