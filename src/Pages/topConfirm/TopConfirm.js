@@ -1,15 +1,58 @@
 import React from "react";
+import { postRequest } from "../../config/AxiosRoutes/index"
 import dateicon from "../../images/Chips Icons Mobile.png";
 import timeicon from "../../images/Chips Icons Mobile (1).png";
 import membericon from "../../images/Chips Icons Mobile (3).png";
-import reacticon from "../../images/Chips Icons Mobile (2).png";
 import resturanticon from "../../images/table_restaurant.png";
 import logo1 from "../../images/Logo (1).png";
 import sectionimg2 from "../../images/Tap & Run_MainImage 1.png";
 import whitelogo from "../../images/T&R White.png"
 import "./TopConfirm.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 export default function Confirm() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const submissionData = location.state;
+
+  const handleBooking = async () => {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    const toUrlEncoded = (obj, prefix) => {
+      const str = [];
+      for (const p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          const key = prefix ? `${prefix}[${p}]` : p;
+          const value = obj[p];
+          if (typeof value === 'object' && value !== null) {
+            str.push(toUrlEncoded(value, key));
+          } else {
+            str.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+          }
+        }
+      }
+      return str.join('&');
+    };
+
+    try {
+      const encodedData = toUrlEncoded(submissionData);
+      const response = await postRequest(
+        '/ConsumerApi/v1/Restaurant/CatWicketsTest/BookingWithStripeToken',
+        headers,
+        encodedData
+      );
+      console.log('Booking Success:', response.data);
+      navigate('/topBooked');
+    } catch (error) {
+      console.error('Booking Failed:', error);
+    }
+  };
+
   return (
     <div className="ConfirmMain" id="choose">
       <div className="DetailsimgMain">
@@ -33,16 +76,13 @@ export default function Confirm() {
         <div className="Data_type" id="Data_type1">
           <div className="Confirmtitle_type">
             <img src={dateicon} alt="date_icon" />
-            July 19, 2025
+            {submissionData.VisitDate || "Select Date"}
           </div>
           <div className="Confirmtitle_type">
-            <img src={timeicon} alt="time_icon" /> 5:00 PM
+            <img src={timeicon} alt="time_icon" /> {submissionData.VisitTime || "Select Time"}
           </div>
           <div className="Confirmtitle_type">
-            <img src={membericon} alt="member_icon" />3{" "}
-          </div>
-          <div className="Confirmtitle_type">
-            <img src={reacticon} alt="react_icon" /> 3{" "}
+            <img src={membericon} alt="member_icon" />{submissionData.PartySize ||"Select Party Size"}
           </div>
           <div className="Confirmtitle_type">
             <img src={resturanticon} alt="react_icon" />
@@ -55,25 +95,25 @@ export default function Confirm() {
           <div className="confirmedData">
             <p className="confirmedDatatype">
               First Name: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{" "}
-              <span className="namedata">Sophe</span>
+              <span className="namedata">{submissionData.Customer.FirstName}</span>
             </p>
           </div>
           <div className="confirmedData">
             <p className="confirmedDatatype">
               Last Name: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{" "}
-              <span className="namedata">Turner</span>
+              <span className="namedata">{submissionData.Customer.Surname}</span>
             </p>
           </div>
           <div className="confirmedData">
             <p className="confirmedDatatype">
               Mobile Number: &nbsp; &nbsp; &nbsp;
-              <span className="namedata">07782 456 913</span>
+              <span className="namedata">{submissionData.Customer.Mobile}</span>
             </p>
           </div>
           <div className="confirmedData emaildata">
             <p className="confirmedDatatype ">
               Email Address: &nbsp; &nbsp; &nbsp; &nbsp;
-              <span className="namedata">sophie.@email.co.uk</span>
+              <span className="namedata">{submissionData.Customer.Email}</span>
             </p>
           </div>
           <h4 className="comt">Comment</h4>
@@ -102,9 +142,9 @@ export default function Confirm() {
           </div>
         </div>
         <div className="Data_type ConfirmbtonMain">
-          <Link to="/TopBooked" className="Confirmbuttn btn1">
+          <button className="Confirmbuttn btn1" onClick={handleBooking}>
             Book A Table
-          </Link>
+          </button>
           <Link to="/TopDetails" className="Confirmbuttn btn2">
             Back
           </Link>

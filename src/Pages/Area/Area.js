@@ -11,9 +11,20 @@ import Areimg2 from "../../images/TheGriffinInn_Stables_NewBarFloor.png";
 import arrowdrop from "../../images/arrow_drop_up.png";
 import sectionimg2 from "../../images/Tap & Run_MainImage 1.png";
 import tabimg from "../../images/Menu Icon Mobile (1).png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Area.css";
+
 export default function Area() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { date, time, adults, children, returnBy } = location.state || {};
+
+  const isFormValid = date && time && adults && children;
+  const handleNextClick = () => {
+    if (!isFormValid) return;
+    navigate("/details", { state: {date, time, adults, children, returnBy}});
+  };
+
   return (
     <div className="AreaaMain" id="choose">
       <div className="AreaimgMain">
@@ -39,20 +50,23 @@ export default function Area() {
         <div className="Area_type" id="Area_type1">
           <div className="Areatitle_type">
             <img src={dateicon} alt="date_icon" />
-            July 19, 2025
+            {date ? date : "Select Date"}
           </div>
           <div className="Areatitle_type">
-            <img src={timeicon} alt="time_icon" /> 5:00 PM
+            <img src={timeicon} alt="time_icon" />
+            {time ? time : "Select Time"}
           </div>
           <div className="Areatitle_type">
-            <img src={membericon} alt="member_icon" />3{" "}
+            <img src={membericon} alt="member_icon" />
+            {adults || 0}
           </div>
           <div className="Areatitle_type">
-            <img src={reacticon} alt="react_icon" /> 3{" "}
+            <img src={reacticon} alt="react_icon" />
+            {children || 0}
           </div>
           <div className="Areatitle_type">
             <img src={resturanticon} alt="react_icon" />
-            Restaurant Area
+            The Old Pub Area
           </div>
         </div>
         <div className="Area_type">
@@ -129,16 +143,25 @@ export default function Area() {
         </div>
         <div className="Area_type">
           <p className="tabletext">
-            Your table is required to be returned by XX:XX <br /> PM
+            Your table is required to be returned by {returnBy|| "XX:XX PM"}
           </p>
         </div>
         <div className="Area_type DatabtnMain">
           <Link to="/Griffin" className="Area-button" state={{ image: sectionimg2 }}>
             BACK
           </Link>
-          <Link to="/Details" className="Area-button">
+          <button
+            className="griffinbuttn3"
+            onClick={handleNextClick}
+            disabled={!isFormValid}
+            style={{
+              backgroundColor: !isFormValid ? "#ccc" : "#000",
+              color: !isFormValid ? "#666" : "#fff",
+              cursor: !isFormValid ? "not-allowed" : "pointer",
+            }}
+          >
             NEXT
-          </Link>
+          </button>
         </div>
         <div className="changeMainn">
           <div className="changeselect"></div>

@@ -2,9 +2,7 @@ import React from "react";
 import chooseimg from "../../images/Left Container The Cat and Wickets.png";
 import topandrunlogo from "../../images/Logo (1).png";
 import logo from "../../images/Griffin Black.png";
-// import Toprunimg from "../../images/Logo (1).png";
 import { Link } from "react-router-dom";
-import sectionimg2 from "../../images/Tap & Run_MainImage 1.png"
 import "./Select.css";
 export default function Select() {
 
@@ -49,10 +47,7 @@ export default function Select() {
           <Link
             to="/griffin"
             className="selctbtn"
-           
-            // onClick={() => handleClick("wolf")}
           >
-            
             SELECT
           </Link>
         </div>
