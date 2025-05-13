@@ -117,7 +117,7 @@ export default function Confirm() {
           </div>
           <h4 className="comt">Comment</h4>
           <div className="commentsdata">
-            "Hi there! We’re celebrating my partner’s birthday, so if possible, we’d love a cozy corner table or something with a bit of atmosphere. Also, one of our guests has a gluten allergy, so if you could let us know about any gluten-free options in advance, that would be amazing. We’ll also be bringing a small birthday cake (happy to pay a plating fee if needed). Thanks so much—we’re really looking forward to it!"
+            {submissionData.SpecialRequests || "No Comment"}
           </div>
         </div>
         <div className="Data_type inputmain">

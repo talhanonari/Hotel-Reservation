@@ -1,10 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import { postRequest } from "../../config/AxiosRoutes/index"
 import logo from "../../images/Griffin Black.png";
 import sectionimage from "../../images/79205c0e916b529d8d136ce69e32e592.png";
 import TextField from "@mui/material/TextField";
 import "./BookingN.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 export default function BookingNumber() {
+  const [bookingNumber, setBookingNumber] = useState("");
+  const [reasonId, setReasonId] = useState(1);
+  const navigate = useNavigate();
+  
+  const handleCancelBooking = async () => {
+    if (!bookingNumber || !reasonId) {
+      alert("Please fill all fields before submitting.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const data = {
+      micrositeName: "CatWicketsTest",
+      bookingReference: bookingNumber,
+      cancellationReasonId: parseInt(reasonId),
+    };
+
+    try {
+      const response = await postRequest(
+        `/ConsumerApi/v1/Restaurant/CatWicketsTest/Booking/${bookingNumber}/Cancel`,
+        headers,
+        data
+      );
+      console.log("Cancel booking response:", response.data);
+      navigate("/Cancelled");
+    } catch (error) {
+      console.error("Cancel booking error:", error);
+      alert("Failed to cancel the booking. Please try again.");
+    }
+  };
+
   return (
     <div className="BookednMain" id="choose">
       <div className="DetailsimgMain">
@@ -29,49 +66,38 @@ export default function BookingNumber() {
           </h4>
         </div>
         <div className="textfieldMain">
-          <TextField
-            required
-            id="outlined-required"
-            label="Booking Number"
-            defaultValue="Enter Your Booking Number"
-            className="inputfeild feildproblem"
-          />
-          <p className="eg">E.G. XXXX-XXXX-XXXX</p>
-        </div>
-        <select
-          class="form-select form-select-lg mb-2 selectrdata "
-          aria-label=".form-select example"
-        >
-          <option selected className="reasonmain">
-            The Reason For Cancellation
-          </option>
-          <option value="1" className="reasonmain">
-            Illness
-          </option>
-          <option value="2" className="reasonmain">
-            Change Of Plans
-          </option>
-          <option value="3" className="reasonmain">
-            Booked The Wrong Date/Time
-          </option>
-          <option value="4" className="reasonmain">
-            Found Another Venue
-          </option>
-          <option value="5" className="reasonmain">
-            Personal Reason
-          </option>
-          <option value="6" className="reasonmain">
-            Prefer Not To Answer
-          </option>
-        </select>
+        <TextField
+          required
+          id="outlined-required"
+          label="Booking Number"
+          className="inputfeild feildproblem"
+          value={bookingNumber}
+          onChange={(e) => setBookingNumber(e.target.value)}
+        />
+        <p className="eg">E.G. XXXX-XXXX-XXXX</p>
+      </div>
+
+      <select
+        className="form-select form-select-lg mb-2 selectrdata"
+        value={reasonId}
+        onChange={(e) => setReasonId(e.target.value)}
+      >
+        <option value="">The Reason For Cancellation</option>
+        <option value="1">Illness</option>
+        <option value="2">Change Of Plans</option>
+        <option value="3">Booked The Wrong Date/Time</option>
+        <option value="4">Found Another Venue</option>
+        <option value="5">Personal Reason</option>
+        <option value="6">Prefer Not To Answer</option>
+      </select>
         <div className="Nbooking-type DatabtonMain">
-          <Link to="/Lost" className="modifybtn btn3">
-            Cancel A Booking
-          </Link>
-          <Link to="" className="modifybtn btn2">
-            resend confirmation
-          </Link>
-        </div>
+        <button onClick={handleCancelBooking} className="modifybtn btn3">
+          Cancel A Booking
+        </button>
+        <Link to="/Lost" className="modifybtn btn2">
+          resend confirmation
+        </Link>
+      </div>
         <div className="Nbooking-type" id="Nbooking-type1">
           <h5>
             Lost Your Booking Details? Press The Button To Resend The

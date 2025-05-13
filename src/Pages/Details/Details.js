@@ -17,6 +17,7 @@ export default function Details() {
   const [globalError, setGlobalError] = useState('');
   const [formData, setFormData] = useState({
     SpecialRequests: '',
+    IsLeaveTimeConfirmed:true,
     Customer: {
       FirstName: '',
       Surname: '',
