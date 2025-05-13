@@ -51,10 +51,12 @@
     width: 80%;
     border: 1px solid grey;
     border-radius: 5px;
-    color: gray;
+    color: grey;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 18px;
     font-family: Inter, sans-serif;
     font-weight: 300 !important;
-    font-size: 25px;
     height: 60px !important;
 }
 .Detailtitle_type{
