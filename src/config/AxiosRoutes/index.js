@@ -1,9 +1,8 @@
 import axios from "axios";
-const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const loginRequest = async (path, data) => {
   try {
-    const response = await axios.post(baseUrl + path, data);
+    const response = await axios.post( path, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -12,7 +11,7 @@ const loginRequest = async (path, data) => {
 
 const postRequest = async (path, headers, data) => {
   try {
-    const response = await axios.post(`${baseUrl}${path}`, data, {
+    const response = await axios.post(`${path}`, data, {
       headers: headers,
     });
     return response;
@@ -23,7 +22,7 @@ const postRequest = async (path, headers, data) => {
 
 const getRequest = async (path, data) => {
   try {
-    const response = await axios.get(baseUrl + path, data);
+    const response = await axios.get(path, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -36,7 +35,7 @@ const delRequest = (path, token, data) => {
   };
 
   return axios
-    .delete(baseUrl + path, { headers, data })
+    .delete(path, { headers, data })
     .then((res) => {
       if (res.status === 200) {
         const message = "Record Deleted Successfully!";
@@ -52,7 +51,7 @@ const delRequest = (path, token, data) => {
 
 const patchRequest = async (path, headers, data) => {
   try {
-    const response = await axios.patch(`${baseUrl}${path}`, data, {
+    const response = await axios.patch(`${path}`, data, {
       headers: headers,
     });
     return response;
@@ -63,7 +62,7 @@ const patchRequest = async (path, headers, data) => {
 
 const putRequest = async (path, headers, data) => {
   try {
-    const response = await axios.put(`${baseUrl}${path}`, data, {
+    const response = await axios.put(`${path}`, data, {
       headers: headers,
     });
     return response;
