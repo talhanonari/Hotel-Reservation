@@ -1,28 +1,23 @@
+import axios from 'axios';
+
 export const loginAndStoreToken = async () => {
-  try {
-    const response = await fetch(`/api/Jwt/v2/Authenticate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: 'cat.wickets+api@resdiary.com',
-        password: 'yZ/&J[!tGKIt[9Ke+[g/sfQ#3h|l8K',
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+try {
+  const response = await axios.post(
+    `/api/Jwt/v2/Authenticate`,
+    {
+      username: 'cat.wickets+api@resdiary.com',
+      password: 'yZ/&J[!tGKIt[9Ke+[g/sfQ#3h|l8K',
     }
+  );
 
-    const data = await response.json();
-    const { Token, TokenExpiryUtc } = data;
+  const { Token, TokenExpiryUtc } = response.data;
 
-    localStorage.setItem('token', Token);
-    localStorage.setItem('token_expiry', TokenExpiryUtc);
-    return Token;
-  } catch (error) {
-    console.error('Login failed:', error);
-    throw error;
-  }
+  localStorage.setItem('token', Token);
+  localStorage.setItem('token_expiry', TokenExpiryUtc);
+  return Token;
+} catch (error) {
+  console.error('Login failed:', error);
+  throw error;
+}
+
 };
