@@ -10,26 +10,35 @@ import Areimg1 from "../../images/TheGriffinInn_OldPubArea.png";
 import Areimg2 from "../../images/TheGriffinInn_Stables_NewBarFloor.png";
 import arrowdrop from "../../images/arrow_drop_up.png";
 import tabimg from "../../images/Menu Icon Mobile (1).png";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./PickArea.css";
 export default function PickArea() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { date, time, adults, children, bookingNumber, returnBy } = location.state || {};
+
+  const isFormValid = date && time && adults && children;
+  const handleNextClick = () => {
+    if (!isFormValid) return;
+    navigate("/ReDetail", { state: {date, time, adults, children, returnBy, bookingNumber} });
+  };
+
   return (
-    <div className="AreaMain" id="choose">
+    <div className="AreaaMain" id="choose">
       <div className="AreaimgMain">
-        <img src={logo} alt="logo" className="logodata" />
-        <img src={sectionimage} alt="section_image" className="Data_imag" />
+      <img src={logo} alt="logo" className="logodata" />
+      <img src={sectionimage} alt="section_" className="Data_imag" />
         <div className="changeMain">
-          <div className="Changeta"></div>
-          <div className="Changeta"></div>
-          <div className="Changeta fixedit"></div>
-          <div className="Changeta "></div>
-          <div className="Changeta"></div>
+          <div className="changetab"></div>
+          <div className="changetab fixd"></div>
+          <div className="changetab"></div>
+          <div className="changetab"></div>
         </div>
         <Link to="/Select" className="anotherpub">
           CHOOSE ANOTHER PUB
         </Link>
       </div>
-      <div className="Area-main" id="Area--main">
+      <div className="Ara-main" id="Area--main">
         <div className="Area_type imgdata">
           <img src={logo} alt="logo" />
         </div>
@@ -39,20 +48,23 @@ export default function PickArea() {
         <div className="Area_type" id="Area_type1">
           <div className="Areatitle_type">
             <img src={dateicon} alt="date_icon" />
-            July 19, 2025
+            {date ? date : "Select Date"}
           </div>
           <div className="Areatitle_type">
-            <img src={timeicon} alt="time_icon" /> 5:00 PM
+            <img src={timeicon} alt="time_icon" />
+            {time ? time : "Select Time"}
           </div>
           <div className="Areatitle_type">
-            <img src={membericon} alt="member_icon" />3{" "}
+            <img src={membericon} alt="member_icon" />
+            {adults || 0}
           </div>
           <div className="Areatitle_type">
-            <img src={reacticon} alt="react_icon" /> 3{" "}
+            <img src={reacticon} alt="react_icon" />
+            {children || 0}
           </div>
           <div className="Areatitle_type">
             <img src={resturanticon} alt="react_icon" />
-            Restaurant Area
+            The Old Pub Area
           </div>
         </div>
         <div className="Area_type">
@@ -61,7 +73,7 @@ export default function PickArea() {
               <div className="restArea" id="restArea1">
                 <img src={Areimg1} alt="Area_" className="Newbrimg"/>
                 <p className="Areatextmain">
-                <h4>The Old Pub Area</h4>
+                  <h4>The Old Pub Area</h4>
                   <br />
                   (Dog Friendly)
                 </p>
@@ -71,19 +83,19 @@ export default function PickArea() {
           <div className="areasection">
             <div className="area_1and2">
               <div className="restArea">
-                <img src={Areimg2} alt="Area_" className="Newbrimg" />
+                <img src={Areimg2} alt="Area_" className="Newbrimg"/>
                 <p className="Areatextmain">
-                <h4>Stables And New Bar Area</h4>
+                  <h4>Stables And New Bar Area</h4>
                   <Link
                     className="readinfo"
                     id="readinfoo"
                     onClick={() => {
                       document.getElementById("readinfoo").style.display =
                         "none";
-                      document.getElementById("readtextt").style.display =
-                        "flex";
                       document.getElementById("readinfoo").style.marginLeft =
                         "0px";
+                      document.getElementById("readtextt").style.display =
+                        "flex";
                       document.getElementById("hideifo").style.display = "flex";
                       document.getElementById("Area--main").style.marginTop =
                         "10px";
@@ -101,8 +113,7 @@ export default function PickArea() {
                       document.getElementById("readtextt").style.display =
                         "none";
                       document.getElementById("hideifo").style.display = "none";
-                      document.getElementById("hideifo").style.marginLeft =
-                        "0px";
+                      document.getElementById("hideifo").style.marginLeft = "0px";
                       document.getElementById("Area--main").style.marginTop =
                         "10px";
                     }}
@@ -130,23 +141,31 @@ export default function PickArea() {
         </div>
         <div className="Area_type">
           <p className="tabletext">
-            Your table is required to be returned by XX:XX <br /> PM
+            Your table is required to be returned by {returnBy|| "XX:XX PM"}
           </p>
         </div>
         <div className="Area_type DatabtnMain">
           <Link to="/Edit" className="data-button">
             BACK
           </Link>
-          <Link to="/ReDetail" className="data-button">
+          <button
+            className="griffinbuttn3"
+            onClick={handleNextClick}
+            disabled={!isFormValid}
+            style={{
+              backgroundColor: !isFormValid ? "#ccc" : "#000",
+              color: !isFormValid ? "#666" : "#fff",
+              cursor: !isFormValid ? "not-allowed" : "pointer",
+            }}
+          >
             NEXT
-          </Link>
+          </button>
         </div>
-        <div className="PickAreaMain">
-          <div className="PickAreatab "></div>
-          <div className="PickAreatab"></div>
-          <div className="PickAreatab fixedit"></div>
-          <div className="PickAreatab "></div>
-          <div className="PickAreatab "></div>
+        <div className="changeMainn">
+          <div className="changeselect"></div>
+          <div className="changeselect fixd"></div>
+          <div className="changeselect"></div>
+          <div className="changeselect"></div>
         </div>
         <div className="Area_type ">
           <Link to="/Select" className="anotherpub2">
