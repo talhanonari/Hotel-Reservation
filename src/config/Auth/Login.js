@@ -3,7 +3,7 @@ import axios from 'axios';
 export const loginAndStoreToken = async () => {
 try {
   const response = await axios.post(
-    `/api/Jwt/v2/Authenticate`,
+    `https://api.rdbranch.com/api/Jwt/v2/Authenticate`,
     {
       username: 'cat.wickets+api@resdiary.com',
       password: 'yZ/&J[!tGKIt[9Ke+[g/sfQ#3h|l8K',
