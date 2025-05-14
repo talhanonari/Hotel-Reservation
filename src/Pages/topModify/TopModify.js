@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../images/Griffin Black.png";
-import sectionimage from "../../images/79205c0e916b529d8d136ce69e32e592.png";
 import TextField from "@mui/material/TextField";
-import logo1 from "../../images/Logo (1).png";
 import whitelogo from "../../images/T&R White.png"
 import sectionimg2 from "../../images/Tap & Run_MainImage 1.png";
 import "./TopModify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 export default function Modify() {
+  const navigate = useNavigate();
+  const [bookingNumber, setBookingNumber] = useState("");
+
+  const handleNextClick = () => {
+    if (!bookingNumber) {
+      alert("Please fill booking number before submitting.");
+      return;
+    }
+    navigate("/TopEdit", { state: { bookingNumber } }); // Pass as object
+  };
+
   return (
     <div className="BookedMain" id="choose">
       <div className="DetailsimgMain">
@@ -42,15 +52,26 @@ export default function Modify() {
             required
             id="outlined-required"
             label="Booking Number"
-            defaultValue="Enter your mobile number"
             className="inputfeild feildproblem"
+            value={bookingNumber}
+            onChange={(e) => setBookingNumber(e.target.value)}
           />
           <p className="eg">E.G. XXXX-XXXX-XXXX</p>
         </div>
+
         <div className="Data_type ModifybtonMain">
-          <Link to="/TopEdit" className="modifybtn btn3">
+          <button
+            onClick={handleNextClick}
+            className="modifybtn btn3"
+            disabled={!bookingNumber}
+            style={{
+              backgroundColor: bookingNumber ? "#000" : "#ccc",
+              color: "#fff",
+              cursor: bookingNumber ? "pointer" : "not-allowed",
+            }}
+          >
             Edit A Booking
-          </Link>
+          </button>
           <Link to="" className="modifybtn btn2">
             resend the confirmation email
           </Link>
