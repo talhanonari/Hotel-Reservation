@@ -41,7 +41,7 @@ export default function Confirm() {
     try {
       const encodedData = toUrlEncoded(submissionData);
       const response = await postRequest(
-        '/ConsumerApi/v1/Restaurant/CatWicketsTest/BookingWithStripeToken',
+        '/api/ConsumerApi/v1/Restaurant/CatWicketsTest/BookingWithStripeToken',
         headers,
         encodedData
       );
