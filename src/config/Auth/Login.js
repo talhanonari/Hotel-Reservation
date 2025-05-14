@@ -1,6 +1,6 @@
 export const loginAndStoreToken = async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/Jwt/v2/Authenticate`, {
+    const response = await fetch(`/Jwt/v2/Authenticate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
