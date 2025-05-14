@@ -31,7 +31,7 @@ export default function TopBookingNumber() {
 
     try {
       const response = await postRequest(
-        `/ConsumerApi/v1/Restaurant/CatWicketsTest/Booking/${bookingNumber}/Cancel`,
+        `/api/ConsumerApi/v1/Restaurant/CatWicketsTest/Booking/${bookingNumber}/Cancel`,
         headers,
         data
       );
