@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getRequest } from "../../config/AxiosRoutes/index"
 import dateicon from "../../images/Chips Icons Mobile.png";
 import timeicon from "../../images/Chips Icons Mobile (1).png";
 import membericon from "../../images/Chips Icons Mobile (3).png";
@@ -17,13 +18,44 @@ import "./TopArea.css";
 export default function Area() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [promotions, setPromotions] = useState([]);
+  const [selectedPromotion, setSelectedPromotion] = useState(null);
   const { date, time, adults, children, returnBy } = location.state || {};
 
-  const isFormValid = date && time && adults && children;
+  const isFormValid = date && time && adults && children && selectedPromotion;
   const handleNextClick = () => {
     if (!isFormValid) return;
-    navigate("/topDetails", { state: {date, time, adults, children, returnBy}});
+    navigate("/topDetails", { state: {date, time, adults, children, returnBy, selectedPromotion}});
   };
+
+  useEffect(() => {
+    const handleBooking = async () => {
+      const token = localStorage.getItem('token');
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      try {
+        const response = await getRequest(
+          '/api/ConsumerApi/v1/Restaurant/CatWicketsTest/Promotion?promotionIds=2809&promotionIds=2810',
+          headers,
+        );
+        setPromotions(response.data);
+        console.log('promotion Data:', response.data);
+      } catch (error) {
+        console.error('Promotion Failed:', error);
+      }
+    };
+
+    handleBooking();
+  }, []);
+
+  const togglePromotion = (promotion) => {
+  setSelectedPromotion((prev) =>
+    prev?.Id === promotion.Id ? null : { Id: promotion.Id, Name: promotion.Name }
+  );
+};
 
   return (
     <div className="AreaaMain" id="choose">
@@ -66,80 +98,49 @@ export default function Area() {
           </div>
           <div className="Areatitle_type">
             <img src={resturanticon} alt="react_icon" />
-            Restaurant Area
+            {selectedPromotion?.Name || "Select Area"}
           </div>
         </div>
         <div className="Area_type">
-          <div className="areasection">
-            <div className="area_1and2">
-              <div className="restArea" id="restArea1">
-                <img src={Areimg1} alt="Area_" />
-                <p>
-                  <h3>Bar Area</h3>
-                  <br />
-                  (Dog Friendly)
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="areasection">
-            <div className="area_1and2">
-              <div className="restArea">
-                <img src={Areimg2} alt="Area_" />
-                <p className="Areatextmain" >
-                  <h3>Restaurant Area</h3>
-                  <Link
-                    className="readinfo"
-                    id="readinfoo"
-                    onClick={() => {
-                      document.getElementById("readinfoo").style.display =
-                        "none";
-                      document.getElementById("readinfoo").style.marginLeft =
-                        "0px";
-                      document.getElementById("readtextt").style.display =
-                        "flex";
-                      document.getElementById("hideifo").style.display = "flex";
-                      document.getElementById("Area--main").style.marginTop =
-                        "10px";
-                    }}
-                  >
-                    Read Info
-                    <img src={tabimg} alt="tab_img" />{" "}
-                  </Link>
-                  <Link
-                    className="readinfo"
-                    id="hideifo"
-                    onClick={() => {
-                      document.getElementById("readinfoo").style.display =
-                        "flex";
-                      document.getElementById("readtextt").style.display =
-                        "none";
-                      document.getElementById("hideifo").style.display = "none";
-                      document.getElementById("hideifo").style.marginLeft = "0px";
-                      document.getElementById("Area--main").style.marginTop =
-                        "10px";
-                    }}
-                  >
-                    Hide Info
+          {promotions.map((promotion, index) => {
+            const isSelected = selectedPromotion?.Id === promotion.Id;
+            const isRestaurant = promotion.Name.toLowerCase().includes("restaurant");
+
+            return (
+              <div className="areasection" key={promotion.Id}>
+                <div className={`area_1and2 ${isSelected ? "selected" : ""}`} onClick={() => togglePromotion(promotion)}>
+                  <div className="restArea">
                     <img
-                      src={arrowdrop}
-                      alt="tab_img"
-                      className="dropimg"
-                    />{" "}
-                  </Link>
-                </p>
+                      src={isRestaurant ? Areimg2 : Areimg1}
+                      alt={promotion.Name}
+                    />
+                    <p className="Areatextmain">
+                      <h3>{promotion.Name}</h3>
+                      {promotion.Description && isRestaurant && (
+                        <>
+                          <Link
+                            className="readinfo"
+                            onClick={(e) => {
+                              e.stopPropagation(); // prevent selection toggle
+                              const readText = document.getElementById("readtextt");
+                              readText.style.display =
+                                readText.style.display === "none" ? "flex" : "none";
+                            }}
+                          >
+                            Read Info
+                            <img src={tabimg} alt="tab_img" />
+                          </Link>
+                          <h6 className="readtext" id="readtextt" style={{ display: "none" }}>
+                            {promotion.Description}
+                          </h6>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h6 className="readtext" id="readtextt">
-                If this is the only option available, our indoor dog-friendly
-                tables are fully booked. But don't worry—we have plenty of
-                outdoor seating available on a first-come, first-served
-                basis.Selecting this option means you'll be prioritized for a
-                non-dog-friendly area. If those areas are full, you may still be
-                seated in our pub section, where dogs are allowed.
-              </h6>
-            </div>
-          </div>
-          <Link className="selectbton"> SELECT </Link>
+            );
+          })}
         </div>
         <div className="Area_type">
           <p className="tabletext">

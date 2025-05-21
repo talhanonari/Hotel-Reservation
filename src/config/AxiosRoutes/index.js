@@ -20,14 +20,18 @@ const postRequest = async (path, headers, data) => {
   }
 };
 
-const getRequest = async (path, data) => {
+const getRequest = async (path, headers, data) => {
   try {
-    const response = await axios.get(path, data);
-    return response.data;
+    const response = await axios.get(path, {
+      headers,
+      ...data,
+    });
+    return response;
   } catch (error) {
     throw error;
   }
 };
+
 
 const delRequest = (path, token, data) => {
   const headers = {

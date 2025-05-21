@@ -13,10 +13,12 @@ import "./Details.css";
 export default function Details() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { date, time, adults, children } = location.state || {};
+  const { date, time, adults, children, selectedPromotion } = location.state || {};
   const [globalError, setGlobalError] = useState('');
   const [formData, setFormData] = useState({
     SpecialRequests: '',
+    PromotionId: 0,
+    PromotionName: '',
     IsLeaveTimeConfirmed:true,
     Customer: {
       FirstName: '',
@@ -92,6 +94,8 @@ export default function Details() {
       VisitDate: date,
       VisitTime: time,
       PartySize: adults + children,
+      PromotionId: selectedPromotion?.Id,
+      PromotionName: selectedPromotion?.Name,
       ChannelCode: 'ONLINE',
     };
     console.log('Submission Data:', submissionData);
@@ -139,7 +143,7 @@ export default function Details() {
           </div>
           <div className="Detailtitle_type">
             <img src={resturanticon} alt="react_icon" />
-            Restaurant Area
+            {selectedPromotion?.Name || "Select Area"}
           </div>
         </div>
         {globalError && (
