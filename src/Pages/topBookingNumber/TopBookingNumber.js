@@ -95,16 +95,16 @@ export default function TopBookingNumber() {
         <button onClick={handleCancelBooking} className="modifybtn btn3">
           Cancel A Booking
         </button>
-          <Link to="/TopLost" className="modifybtn btn2">
+          {/* <Link to="/TopLost" className="modifybtn btn2">
             resend confirmation
-          </Link>
+          </Link> */}
         </div>
-        <div className="Nbooking-type" id="Nbooking-type1">
+        {/* <div className="Nbooking-type" id="Nbooking-type1">
           <h5>
             Lost Your Booking Details? Press The Button To Resend The
             Confirmation Email.
           </h5>
-        </div>
+        </div> */}
         <div className="BookingNmob">
           <div className="BookingNtab fixedit"></div>
           <div className="BookingNtab "></div>

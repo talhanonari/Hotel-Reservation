@@ -112,7 +112,7 @@
     width: 80%;
 }
 .DatabtnMain3{
-    width: 80%;
+    width: 100% !important;
     display: flex;
     flex-direction: row !important;
     gap: 15px;
@@ -165,6 +165,9 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
+    }
+    .griffinnMain{
+        padding-top: 50px;
     }
     .selecteopt{
         width: 80%;

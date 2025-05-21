@@ -71,16 +71,16 @@ export default function Modify() {
           >
             Edit A Booking
           </button>
-          <Link to="" className="modifybtn btn2">
+          {/* <Link to="" className="modifybtn btn2">
             resend the confirmation email
-          </Link>
+          </Link> */}
         </div>
-        <div className="Data_type" id="Data_type1">
+        {/* <div className="Data_type" id="Data_type1">
           <h5>
             Lost Your Booking Details? Press The Button To Resend The
             Confirmation Email.
           </h5>
-        </div>
+        </div> */}
         <div className="ModifyMainmob">
           <div className="Modifytab fixedit"></div>
           <div className="Modifytab "></div>

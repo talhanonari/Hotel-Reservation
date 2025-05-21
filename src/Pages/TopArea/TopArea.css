@@ -109,14 +109,14 @@
     flex-direction: column;
     height: 85vh;
 }
-.changeMain{
-    width: 100%;
-    display: flex;
+.changeTopMainn{
+    width: 80%;
+    display: none;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
 }
-.changetab{
+.changeToptabb{
     width: 22%;
     height: 8px;
     border-radius: 10px;
@@ -210,11 +210,11 @@
     }
     .Ara-main{
         width: 100%;
-        /* margin-top: 400px; */
         height:fit-content;
     }
     .AreaaMain{
         height: fit-content;
+
     }
     .imgdata{
         display: flex;
@@ -235,7 +235,7 @@
     .Area-button{
         height: 40px;
     }
-    .changeMainn{
+    .changeTopMainn{
         width: 80%;
         display: flex;
         flex-direction: row;

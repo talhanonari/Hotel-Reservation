@@ -116,14 +116,14 @@
     flex-direction: column;
     height: 85vh;
 }
-.changeMain{
-    width: 100%;
+.changeMnn{
+    width: 80%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
 }
-.changetab{
+.changeselectarea{
     width: 22%;
     height: 8px;
     border-radius: 10px;
@@ -161,12 +161,25 @@
     width: 80%;
 }
 .DatabtnMain{
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     gap: 25px;
 }
 .Area-button{
+    width: 48% !important;
+    height: 60px;
+    background-color: #000;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    align-items: center;
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+}
+.griffinbuttn3{
     width: 48%;
     height: 60px;
     background-color: #000;
@@ -245,9 +258,9 @@
         gap: 10px;
         height: auto;
     }
-    .Area-button{
+    /* .Area-button{
         height: 40px;
-    }
+    } */
     .changeMainn{
         width: 80%;
         display: flex;

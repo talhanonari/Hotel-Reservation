@@ -198,7 +198,7 @@ export default function Details() {
               value={formData.DateOfBirth}
               onChange={handleDateChange}
               onFocus={(e) => e.target.showPicker?.()}
-              className="inputfeild feildproblem comments inputunik"
+              className="inputfeild feildproblem comments inputunik pron"
             />
             <p className="eg">Date of Birth</p>
           </div>

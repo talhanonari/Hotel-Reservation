@@ -67,9 +67,9 @@ export default function Resent() {
           <Link to="/Cancelled" className="modifybtn btn3">
             Cancel A Booking
           </Link>
-          <Link to="" className="modifybtn btn2">
+          {/* <Link to="" className="modifybtn btn2">
             resend confirmation
-          </Link>
+          </Link> */}
         </div>
         <div className="BookingNmob">
           <div className="BookingNtab "></div>

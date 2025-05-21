@@ -151,7 +151,7 @@ export default function Area() {
             BACK
           </Link>
           <button
-            className="griffinbuttn3"
+            className="Area-button "
             onClick={handleNextClick}
             disabled={!isFormValid}
             style={{
@@ -163,11 +163,11 @@ export default function Area() {
             NEXT
           </button>
         </div>
-        <div className="changeMainn">
-          <div className="changeselect"></div>
-          <div className="changeselect fixd"></div>
-          <div className="changeselect"></div>
-          <div className="changeselect"></div>
+        <div className="changeMnn">
+          <div className="changeselectarea"></div>
+          <div className="changeselectarea fixd"></div>
+          <div className="changeselectarea"></div>
+          <div className="changeselectarea"></div>
         </div>
         <div className="Area_type ">
           <Link to="/Select" className="anotherpub2">

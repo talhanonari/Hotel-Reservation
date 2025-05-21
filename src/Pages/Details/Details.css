@@ -157,14 +157,14 @@
 }
 
 .DetailbnMain{
-    width: 80%;
+    width: 100% !important;
     display: flex;
     justify-content: space-between !;
     flex-direction: row !important;
     gap: 10px !important;
 }
 .detailbutton{
-    width: 39%;
+    width: 39% !important;
     height: 60px;
     color: white;
     background-color: #000;
@@ -175,6 +175,9 @@
     display: flex;
     justify-content: center;
     border-radius: 5px;
+}
+.griffinbuttn3{
+    width: 39% !important;
 }
 .detailbutton:hover{
     color: white;
@@ -187,7 +190,7 @@
     display: none;
 }
 .feildproblem{
-    width: 100%;
+    width: 80%;
     
 }
 @media only screen and (max-width: 700px) {
@@ -205,7 +208,10 @@
         margin-right: -0px;
     }
     .feildproblem{
-        width: 100%;
+        width: 100% !important;
+    }
+    .inputunik{
+        width: 92% !important;
     }
     .imgdata{
         display: flex;
@@ -222,9 +228,9 @@
         justify-content: center;
         gap: 10px;
     }
-    .detailbutton{
+    /* .detailbutton{
         height: 40px;
-    }
+    } */
     .DetailsMainmob{
         width: 80%;
         display: flex;
