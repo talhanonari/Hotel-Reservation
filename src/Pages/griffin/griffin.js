@@ -13,14 +13,13 @@ export default function Griffin() {
   const navigate = useNavigate();
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-    const [selectedTimeISO, setSelectedTimeISO] = useState("");
-    const [leaveTime, setLeaveTime] = useState("");
-    const [timeSlots, setTimeSlots] = useState([]);
+  const [selectedTimeISO, setSelectedTimeISO] = useState("");
+  const [leaveTime, setLeaveTime] = useState("");
+  const [timeSlots, setTimeSlots] = useState([]);
   const [adults, setAdults] = useState("");
   const [children, setChildren] = useState("");
   const [guestError, setGuestError] = useState("");
 
-  
     useEffect(() => {
       const fetchAvailability = async () => {
         const token = localStorage.getItem("token");
@@ -158,24 +157,20 @@ export default function Griffin() {
               </option>
             ))}
           </select>
-          
           <select
             className="form-select form-select-lg mb-2 selecteopt"
             aria-label="Select Time"
             value={selectedTimeISO}
             onChange={(e) => {
               const iso = e.target.value;
-              setSelectedTimeISO(iso); // keep selected value for <select>
-
+              setSelectedTimeISO(iso);
               const dateObj = new Date(iso);
               const formatted24Hour = dateObj.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
                 hour12: false,
               });
-
-              setTime(formatted24Hour); // "20:15" for API
-
+              setTime(formatted24Hour);
               const selectedSlot = timeSlots.find((slot) => slot.TimeSlot === iso);
               setLeaveTime(selectedSlot?.LeaveTime || "");
             }}

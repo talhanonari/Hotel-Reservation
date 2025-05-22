@@ -68,7 +68,7 @@ export default function Griffin() {
   return (
     <div className="griffinnMain" id="choose">
       <div className="DataimgMain">
-      <img src={whitelogo} alt="logo" className="logodata" />
+        <img src={whitelogo} alt="logo" className="logodata" />
         <img src={sectionimg2} alt="section_" className="Data_imag" />
         <div className="changeMain">
           <div className="changetab fixed"></div>
@@ -165,17 +165,14 @@ export default function Griffin() {
             value={selectedTimeISO}
             onChange={(e) => {
               const iso = e.target.value;
-              setSelectedTimeISO(iso); // keep selected value for <select>
-
+              setSelectedTimeISO(iso);
               const dateObj = new Date(iso);
               const formatted24Hour = dateObj.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
                 hour12: false,
               });
-
-              setTime(formatted24Hour); // "20:15" for API
-
+              setTime(formatted24Hour);
               const selectedSlot = timeSlots.find((slot) => slot.TimeSlot === iso);
               setLeaveTime(selectedSlot?.LeaveTime || "");
             }}
