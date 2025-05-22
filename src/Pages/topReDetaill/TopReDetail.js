@@ -14,10 +14,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 export default function TopReDetail() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { date, time, adults, children, bookingNumber } = location.state || {};
+  const { date, time, adults, children, bookingNumber, selectedPromotion } = location.state || {};
   const [globalError, setGlobalError] = useState('');
   const [formData, setFormData] = useState({
     SpecialRequests: '',
+    PromotionId: 0,
+    PromotionName: '',
     IsLeaveTimeConfirmed:true,
     Customer: {
       FirstName: '',
@@ -92,6 +94,8 @@ export default function TopReDetail() {
       ...formData,
       VisitDate: date,
       VisitTime: time,
+      PromotionId: selectedPromotion?.Id,
+      PromotionName: selectedPromotion?.Name,
       PartySize: adults + children,
       BookingNumber: bookingNumber,
       ChannelCode: 'ONLINE',
@@ -141,7 +145,7 @@ export default function TopReDetail() {
           </div>
           <div className="Detailtitle_type">
             <img src={resturanticon} alt="react_icon" />
-            Restaurant Area
+            {selectedPromotion?.Name || "Select Area"}
           </div>
         </div>
         {globalError && (

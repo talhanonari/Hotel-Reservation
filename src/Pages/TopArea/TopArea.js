@@ -7,7 +7,6 @@ import reacticon from "../../images/Chips Icons Mobile (2).png";
 import resturanticon from "../../images/table_restaurant.png";
 import Areimg1 from "../../images/Image (1).png";
 import Areimg2 from "../../images/Image (2).png";
-import arrowdrop from "../../images/arrow_drop_up.png";
 import tabimg from "../../images/Menu Icon Mobile (1).png";
 import sectionimg2 from "../../images/Tap & Run_MainImage 1.png";
 import whitelogo from "../../images/T&R White.png"
@@ -22,7 +21,7 @@ export default function Area() {
   const [selectedPromotion, setSelectedPromotion] = useState(null);
   const { date, time, adults, children, returnBy } = location.state || {};
 
-  const isFormValid = date && time && adults && children && selectedPromotion;
+  const isFormValid = date && time && adults && selectedPromotion;
   const handleNextClick = () => {
     if (!isFormValid) return;
     navigate("/topDetails", { state: {date, time, adults, children, returnBy, selectedPromotion}});

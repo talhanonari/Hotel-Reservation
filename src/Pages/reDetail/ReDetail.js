@@ -13,11 +13,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 export default function ReDetail() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { date, time, adults, children, bookingNumber } = location.state || {};
+  const { date, time, adults, children, bookingNumber, selectedPromotion } = location.state || {};
   const [globalError, setGlobalError] = useState('');
   const [formData, setFormData] = useState({
     SpecialRequests: '',
     IsLeaveTimeConfirmed:true,
+    PromotionId: 0,
+    PromotionName: '',
     Customer: {
       FirstName: '',
       Surname: '',
@@ -79,7 +81,7 @@ export default function ReDetail() {
     if (!formData.DateOfBirth) newErrors.DateOfBirth = 'Date of birth is required';
     if (!date) newErrors.VisitDate = 'Visit date is required';
     if (!time) newErrors.VisitTime = 'Visit time is required';
-    if (!adults && !children) newErrors.PartySize = 'At least one guest is required';
+    if (!adults || !children) newErrors.PartySize = 'At least one guest is required';
 
     if (Object.keys(newErrors).length > 0) {
       setGlobalError('Please fill in all required fields correctly.');
@@ -91,6 +93,8 @@ export default function ReDetail() {
       ...formData,
       VisitDate: date,
       VisitTime: time,
+      PromotionId: selectedPromotion?.Id,
+      PromotionName: selectedPromotion?.Name,
       PartySize: adults + children,
       BookingNumber: bookingNumber,
       ChannelCode: 'ONLINE',
@@ -140,7 +144,7 @@ export default function ReDetail() {
           </div>
           <div className="Detailtitle_type">
             <img src={resturanticon} alt="react_icon" />
-            Restaurant Area
+            {selectedPromotion?.Name || "Select Area"}
           </div>
         </div>
         {globalError && (

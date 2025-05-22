@@ -101,7 +101,7 @@ export default function Confirmed() {
           </div>
           <div className="Confirmtitle_type">
             <img src={resturanticon} alt="react_icon" />
-            Restaurant Area
+            {submissionData?.PromotionName || "Select Area"}
           </div>
         </div>
         <img src={logo} alt="logo" />
