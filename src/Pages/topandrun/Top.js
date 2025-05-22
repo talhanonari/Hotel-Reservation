@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { postRequest } from "../../config/AxiosRoutes/index"
 import { Link, useNavigate } from "react-router-dom";
 import dateicon from "../../images/Chips Icons Mobile.png";
 import timeicon from "../../images/Chips Icons Mobile (1).png";
@@ -13,24 +14,44 @@ export default function Griffin() {
   const navigate = useNavigate();
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [selectedTimeISO, setSelectedTimeISO] = useState("");
+  const [leaveTime, setLeaveTime] = useState("");
+  const [timeSlots, setTimeSlots] = useState([]);
   const [adults, setAdults] = useState("");
   const [children, setChildren] = useState("");
   const [guestError, setGuestError] = useState("");
 
-  const getReturnTime = () => {
-    if (!time) return "XX:XX PM";
-    const [h, m] = time.split(":");
-    const date = new Date();
-    date.setHours(parseInt(h));
-    date.setMinutes(parseInt(m));
-    date.setHours(date.getHours() + 2);
-    return date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const partySize = parseInt(adults || 0) + parseInt(children || 0);
+      const payload = {
+        VisitDate: date,
+        ChannelCode: "ONLINE",
+        PartySize: partySize,
+      };
+      try {
+        const response = await postRequest(
+          "/api/ConsumerApi/v1/Restaurant/CatWicketsTest/AvailabilitySearch",
+          headers,
+          payload
+        );
+        console.log("Availability data:", response.data);
+        const slots = response.data?.TimeSlots || [];
+        setTimeSlots(slots);
+      } catch (error) {
+        console.error("Availability fetch failed:", error);
+      }
+    };
+    if (date && adults) {
+      fetchAvailability();
+    }
+  }, [date, adults, children]);
 
-  const isFormValid = date && time && adults && children;
+  const isFormValid = date && time && adults;
   const handleNextClick = () => {
     if (!isFormValid) return;
     navigate("/topArea", {
@@ -39,7 +60,7 @@ export default function Griffin() {
         time,
         adults,
         children,
-        returnBy: getReturnTime(),
+        returnBy: leaveTime,
       },
     });
   };
@@ -138,16 +159,43 @@ export default function Griffin() {
               </option>
             ))}
           </select>
-          <input
-            type="time"
-            className="form-control form-control-lg mb-2 selecteopt"
+          <select
+            className="form-select form-select-lg mb-2 selecteopt"
             aria-label="Select Time"
-            value={time}
-            onFocus={(e) => e.target.showPicker?.()}
-            onChange={(e) => setTime(e.target.value)}
-          />
+            value={selectedTimeISO}
+            onChange={(e) => {
+              const iso = e.target.value;
+              setSelectedTimeISO(iso); // keep selected value for <select>
+
+              const dateObj = new Date(iso);
+              const formatted24Hour = dateObj.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              });
+
+              setTime(formatted24Hour); // "20:15" for API
+
+              const selectedSlot = timeSlots.find((slot) => slot.TimeSlot === iso);
+              setLeaveTime(selectedSlot?.LeaveTime || "");
+            }}
+          >
+            <option value="">Select Time</option>
+            {timeSlots.map((slot, index) => {
+              const iso = slot.TimeSlot;
+              const label = new Date(iso).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+              return (
+                <option key={index} value={iso}>
+                  {label}
+                </option>
+              );
+            })}
+          </select>
           <p className="tbletext">
-            Your table is required to be returned by {getReturnTime()}
+            Your table is required to be returned by {leaveTime || "XX:XX PM"}
           </p>
         </div>
         <div className="Dataa_type DatabtnMain3">
